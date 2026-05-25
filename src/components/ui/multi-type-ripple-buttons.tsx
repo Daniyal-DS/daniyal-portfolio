@@ -164,8 +164,8 @@ export const RippleButton: React.FC<RippleButtonProps> = ({
           style={{
             left: ripple.x, top: ripple.y, width: ripple.size, height: ripple.size,
             backgroundColor: ripple.color,
-            ['--ripple-duration' as any]: `${rippleDuration}ms`,
-          } as CSSProperties}
+            ...( { '--ripple-duration': `${rippleDuration}ms` } as unknown as CSSProperties)
+          }}
         />
       ))}
     </div>

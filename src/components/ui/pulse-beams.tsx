@@ -21,7 +21,7 @@ export interface BeamPath {
     transition?: {
       duration?: number;
       repeat?: number;
-      repeatType?: string;
+      repeatType?: "loop" | "reverse" | "mirror";
       ease?: string;
       repeatDelay?: number;
       delay?: number;
@@ -81,7 +81,7 @@ export const PulseBeams = ({
   );
 };
 
-const SVGs = ({ beams, width, height, baseColor, accentColor, gradientColors }: any) => {
+const SVGs = ({ beams, width, height, baseColor, accentColor, gradientColors }: Omit<PulseBeamsProps, 'children' | 'className' | 'background'>) => {
   return (
     <svg
       width={width}
@@ -91,7 +91,7 @@ const SVGs = ({ beams, width, height, baseColor, accentColor, gradientColors }: 
       xmlns="http://www.w3.org/2000/svg"
       className="flex flex-shrink-0"
     >
-      {beams.map((beam: any, index: number) => (
+      {beams.map((beam: BeamPath, index: number) => (
         <React.Fragment key={index}>
           <path
             d={beam.path}
@@ -104,7 +104,7 @@ const SVGs = ({ beams, width, height, baseColor, accentColor, gradientColors }: 
             strokeWidth="2"
             strokeLinecap="round"
           />
-          {beam.connectionPoints?.map((point: any, pointIndex: number) => (
+          {beam.connectionPoints?.map((point: { cx: number; cy: number; r: number; }, pointIndex: number) => (
             <circle
               key={`${index}-${pointIndex}`}
               cx={point.cx}
@@ -118,7 +118,7 @@ const SVGs = ({ beams, width, height, baseColor, accentColor, gradientColors }: 
       ))}
 
       <defs>
-        {beams.map((beam: any, index: number) => (
+        {beams.map((beam: BeamPath, index: number) => (
           <motion.linearGradient
             key={index}
             id={`grad${index}`}
@@ -139,7 +139,7 @@ const GradientColors = ({ colors = {
   start: "#18CCFC",
   middle: "#6344F5",
   end: "#AE48FF"
-} }: any) => {
+} }: { colors?: { start: string; middle: string; end: string; } }) => {
   return (
     <>
       <stop offset="0%" stopColor={colors.start} stopOpacity="0" />

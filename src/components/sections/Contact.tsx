@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Mail, Copy, CheckCircle2 } from "lucide-react";
-import { PulseBeams } from "@/components/ui/pulse-beams";
+import { PulseBeams, type BeamPath } from "@/components/ui/pulse-beams";
 
-const beams = [
+const beams: BeamPath[] = [
   {
     path: "M269 220.5H16.5C10.9772 220.5 6.5 224.977 6.5 230.5V398.5",
     gradientConfig: {
